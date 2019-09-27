@@ -11,18 +11,35 @@ ALGORITHM_AGING_NBITS = 8
 """How many bits to use for the Aging algorithm"""
 
 class Aging:
+  NBITS = 8
+  VALUE_SUM = 2**(NBITS - 1)
+  SHIFT = 1
 
   def __init__(self):
-    pass
+    self.allocatedFrames = []
+
 
   def put(self, frameId):
-    pass
+    self.allocatedFrames.append(frame)
 
   def evict(self):
-    pass
+    indexOldestFrame = 0
+    
+    self.allocatedFrames.sort(key=lambda frame: frame.access_counter)
+    removedFrame = self.allocatedFrames.pop(indexOldestFrame)
+    
+    return removedFrame.get_id()
+
+
 
   def clock(self):
-    pass
-
+    for frame in self.allocatedFrames:
+        frame.set_referenced(False)
+        frame.set_access_counter(frame.get_access_counter() >> self.SHIFT)
+    
   def access(self, frameId, isWrite):
-    pass
+    frame = self._get_frame(frameId)
+          
+    if not frame.is_referenced():
+        frame.set_referenced(True)
+        frame.set_access_counter(frame.get_access_counter() + self.VALUE_SUM)

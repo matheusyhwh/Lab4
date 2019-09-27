@@ -10,16 +10,32 @@
 class SecondChance:
 
   def __init__(self):
-    pass
+    self.allocatedFrames = []
 
   def put(self, frameId):
-    pass
+    self.allocatedFrames.append(frame)
 
   def evict(self):
-    pass
+    indexOldFrame = 0
+    if self.allocatedFrames[indexOldFrame].is_referenced():
+      self.allocatedFrames[indexOldFrame].set_referenced(False)
+      self.allocatedFrames.append(self.allocatedFrames.pop(indexOldFrame))
+      return self.evict()
+      
+    else:
+      frameRemoved = self.allocatedFrames.pop(indexOldFrame) 
+      return frameRemoved.get_id()
+
+    return self.allocatedFrames.pop(indexOldFrame).get_id()
+    
 
   def clock(self):
     pass
 
   def access(self, frameId, isWrite):
-    pass
+    for frame in self.allocatedFrames:
+      if frame.get_id() == frameId: 
+        frame.set_referenced(True)
+        frame.set_modified(isWrite)
+        break
+            

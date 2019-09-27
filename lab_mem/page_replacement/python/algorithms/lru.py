@@ -10,16 +10,47 @@
 class LRU:
 
   def __init__(self):
-    pass
+    self.allocated_frames = {}
 
-  def put(self, frameId):
-    pass
+  def put(self, frame):
+
+    self.allocated_frames.update({frame.get_id(): ['0'] * len(self.allocated_frames)})
+    
+    for frame in self.allocated_frames:
+        self.allocated_frames[frame].append('0')
 
   def evict(self):
-    pass
+    index_oldest_frame = 0
+    
+    copy_frames = self._copy_dict()
+    sorted_frames = sorted(copy_frames, key=copy_frames.get)    
+    removed_frame_id = sorted_frames.pop(index_oldest_frame)
+    index_removed_frame_id = self.allocated_frames.keys().index(removed_frame_id)
+    del self.allocated_frames[removed_frame_id]
+        
+    for frame in self.allocated_frames:
+        del self.allocated_frames[frame][index_removed_frame_id]
+    
+    return removed_frame_id
 
   def clock(self):
     pass
 
-  def access(self, frameId, isWrite):
-    pass
+  def access(self, frame_id, is_write):
+    """A frame_id was accessed for read/write (if write, is_write=True)"""
+    self.allocated_frames[frame_id] = ['1'] * len(self.allocated_frames)
+    index_frame_id = self.allocated_frames.keys().index(frame_id)
+    
+    for frame in self.allocated_frames:
+        self.allocated_frames[frame][index_frame_id] = '0'
+
+  def _copy_dict(self):
+    return { frame: int(''.join(self.allocated_frames[frame]), 2) for frame in self.allocated_frames }
+
+
+
+
+
+
+
+

@@ -8,18 +8,25 @@
 # you need...
 
 class NRU:
-
+  INDEX_REFERENCED_ELEMENT = 0
+  INDEX_MODIFIED_ELEMENT = 1  
   def __init__(self):
-    pass
+    self.allocated_frames = {}
 
   def put(self, frameId):
-    pass
+    self.allocated_frames.update({frame.get_id(): ['0', '0']})
 
   def evict(self):
-    pass
+    removed_frame_id = self._get_min_frame_id()
+    del self.allocated_frames[removed_frame_id]
+    
+    return removed_frame_id
 
   def clock(self):
-    pass
+    for frame in self.allocated_frames:
+        self.allocated_frames[frame][self.INDEX_REFERENCED_ELEMENT] = '0'
 
   def access(self, frameId, isWrite):
-    pass
+    self.allocated_frames[frame_id][self.INDEX_REFERENCED_ELEMENT] = '1'
+    if is_write:
+        self.allocated_frames[frame_id][self.INDEX_MODIFIED_ELEMENT] = '1'
