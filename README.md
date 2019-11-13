@@ -4,7 +4,7 @@ Repositório de código para disciplina Laboratório de Sistemas Operacionais da
 
 [Página da disciplina em 2019.2](https://thiagomanel.github.io/prso20192)
 
-## Histórico
+## Histórico:
 
 * [Semestre 2019.1](https://thiagomanel.github.io/prso20191 "Semestre 2019.1")
 * [Semestre 2017.1](https://sites.google.com/site/thiagomanel/home/labso_2017-1 "Semestre 2017.1")
