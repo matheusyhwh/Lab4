@@ -14,7 +14,7 @@ class NRU:
     self.allocated_frames = {}
 
   def put(self, frameId):
-    self.allocated_frames.update({frame.get_id(): ['0', '0']})
+    self.allocated_frames.update({frameId: ['0', '0']})
 
   def evict(self):
     removed_frame_id = self._get_min_frame_id()
@@ -27,6 +27,19 @@ class NRU:
         self.allocated_frames[frame][self.INDEX_REFERENCED_ELEMENT] = '0'
 
   def access(self, frameId, isWrite):
-    self.allocated_frames[frame_id][self.INDEX_REFERENCED_ELEMENT] = '1'
-    if is_write:
-        self.allocated_frames[frame_id][self.INDEX_MODIFIED_ELEMENT] = '1'
+    self.allocated_frames[frameId][self.INDEX_REFERENCED_ELEMENT] = '1'
+    if isWrite:
+        self.allocated_frames[frameId][self.INDEX_MODIFIED_ELEMENT] = '1'
+
+  def _get_min_frame_id(self):
+        index_oldest_frame = 0
+        min_frame_id = self.allocated_frames.keys()[index_oldest_frame]
+                        
+        for frameId in self.allocated_frames:
+            value_frame = int(''.join(self.allocated_frames[frameId]), 2)
+            value_min_frame = int(''.join(self.allocated_frames[min_frame_id]), 2)
+            
+            if value_frame <= value_min_frame:
+                min_frame_id = frameId        
+            
+        return min_frame_id

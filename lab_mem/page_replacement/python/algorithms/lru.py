@@ -12,12 +12,12 @@ class LRU:
   def __init__(self):
     self.allocated_frames = {}
 
-  def put(self, frame):
+  def put(self, frameId):
 
-    self.allocated_frames.update({frame.get_id(): ['0'] * len(self.allocated_frames)})
+    self.allocated_frames.update({frameId: ['0'] * len(self.allocated_frames)})
     
-    for frame in self.allocated_frames:
-        self.allocated_frames[frame].append('0')
+    for frameId in self.allocated_frames:
+        self.allocated_frames[frameId].append('0')
 
   def evict(self):
     index_oldest_frame = 0
