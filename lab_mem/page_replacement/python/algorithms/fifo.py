@@ -10,14 +10,14 @@
 class FIFO:
 
   def __init__(self):
-    self.allocatedFrames = []
+    from Queue import Queue
+    self.fila = Queue()
 
   def put(self, frameId):
-    self.allocatedFrames.append(frameId)
+    self.fila.put(frameId)
 
   def evict(self):
-    indexOldFrame = 0
-    return self.allocatedFrames.pop(indexOldFrame).get_id()
+    return self.fila.get()
 
   def clock(self):
     pass
